@@ -371,11 +371,6 @@ const Home = () => {
     { number: '5+', label: 'Years Experience' },
   ];
   
-  const handleJoinNow = () => {
-    // Navigate to membership page
-    window.location.href = '/membership';
-  };
-  
   const handleWatchStory = () => {
     setShowStoryModal(true);
   };
@@ -402,10 +397,7 @@ const Home = () => {
             world-class equipment, expert trainers, and a supportive community.
           </HeroSubtitle>
           <HeroButtons>
-            <Button variant="primary" size="lg" onClick={handleJoinNow}>
-              Join Now
-            </Button>
-            <Button variant="outline" size="lg" onClick={handleWatchStory}>
+            <Button variant="primary" size="lg" onClick={handleWatchStory}>
               Watch Our Story
             </Button>
           </HeroButtons>
@@ -450,11 +442,8 @@ const Home = () => {
           <CTATitle>Ready to Start Your Fitness Journey?</CTATitle>
           <CTADescription>
             Join thousands of satisfied members who have transformed their lives at FitZone. 
-            Your fitness goals are just one step away!
+            Your fitness goals are just one step away! Visit our membership page to explore our plans.
           </CTADescription>
-          <Button variant="outline" size="lg" onClick={handleJoinNow}>
-            Get Started Today
-          </Button>
         </Container>
       </CTASection>
       
