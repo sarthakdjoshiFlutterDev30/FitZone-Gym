@@ -1,4 +1,5 @@
-import { styled } from '../stitches.config';
+import { useState } from 'react';
+import { styled, keyframes } from '../stitches.config';
 import Container from '../components/Container';
 import Button from '../components/Button';
 import SEO from '../components/SEO';
@@ -184,7 +185,162 @@ const CTADescription = styled('p', {
   lineHeight: 1.6,
 });
 
+// Story Modal Animations
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
+
+const slideUp = keyframes({
+  '0%': {
+    transform: 'translateY(100px)',
+    opacity: 0,
+  },
+  '100%': {
+    transform: 'translateY(0)',
+    opacity: 1,
+  },
+});
+
+// Story Modal Components
+const ModalOverlay = styled('div', {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.9)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 9999,
+  animation: `${fadeIn} 0.3s ease-out`,
+  padding: '$4',
+});
+
+const ModalContent = styled('div', {
+  backgroundColor: '$white',
+  borderRadius: '$xl',
+  maxWidth: '800px',
+  width: '100%',
+  maxHeight: '90vh',
+  overflow: 'auto',
+  animation: `${slideUp} 0.4s ease-out`,
+  position: 'relative',
+});
+
+const ModalHeader = styled('div', {
+  position: 'relative',
+  height: '300px',
+  background: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80")',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  borderRadius: '$xl $xl 0 0',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '$white',
+});
+
+const CloseButton = styled('button', {
+  position: 'absolute',
+  top: '$4',
+  right: '$4',
+  width: '40px',
+  height: '40px',
+  borderRadius: '$full',
+  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  border: 'none',
+  color: '$white',
+  fontSize: '$xl',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'all 0.3s ease',
+  
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    transform: 'scale(1.1)',
+  },
+});
+
+const ModalTitle = styled('h2', {
+  fontFamily: '$heading',
+  fontSize: '$4xl',
+  textAlign: 'center',
+  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+});
+
+const ModalBody = styled('div', {
+  p: '$8',
+});
+
+const StorySection = styled('div', {
+  mb: '$8',
+});
+
+const StoryTitle = styled('h3', {
+  fontFamily: '$heading',
+  fontSize: '$2xl',
+  mb: '$4',
+  color: '$crimson',
+});
+
+const StoryText = styled('p', {
+  fontSize: '$base',
+  lineHeight: 1.7,
+  color: '$gray700',
+  mb: '$4',
+});
+
+const StoryHighlight = styled('div', {
+  backgroundColor: '$gray100',
+  p: '$6',
+  borderRadius: '$lg',
+  borderLeft: '4px solid $crimson',
+  mb: '$6',
+  
+  '& p': {
+    fontSize: '$lg',
+    fontWeight: '600',
+    color: '$black',
+    margin: 0,
+  },
+});
+
+const StoryStats = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+  gap: '$4',
+  mt: '$6',
+});
+
+const StoryStat = styled('div', {
+  textAlign: 'center',
+  p: '$4',
+  backgroundColor: '$crimson',
+  color: '$white',
+  borderRadius: '$lg',
+});
+
+const StoryStatNumber = styled('div', {
+  fontFamily: '$heading',
+  fontSize: '$2xl',
+  fontWeight: 'bold',
+});
+
+const StoryStatLabel = styled('div', {
+  fontSize: '$sm',
+});
+
 const Home = () => {
+  const [showStoryModal, setShowStoryModal] = useState(false);
+  
   const features = [
     {
       icon: '🏋️‍♂️',
@@ -215,9 +371,17 @@ const Home = () => {
     { number: '5+', label: 'Years Experience' },
   ];
   
-  const scrollToContact = () => {
-    // This would scroll to contact section or navigate to contact page
-    window.location.href = '/contact';
+  const handleJoinNow = () => {
+    // Navigate to membership page
+    window.location.href = '/membership';
+  };
+  
+  const handleWatchStory = () => {
+    setShowStoryModal(true);
+  };
+  
+  const closeStoryModal = () => {
+    setShowStoryModal(false);
   };
   
   return (
@@ -238,10 +402,10 @@ const Home = () => {
             world-class equipment, expert trainers, and a supportive community.
           </HeroSubtitle>
           <HeroButtons>
-            <Button variant="primary" size="lg" onClick={scrollToContact}>
+            <Button variant="primary" size="lg" onClick={handleJoinNow}>
               Join Now
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={handleWatchStory}>
               Watch Our Story
             </Button>
           </HeroButtons>
@@ -288,11 +452,90 @@ const Home = () => {
             Join thousands of satisfied members who have transformed their lives at FitZone. 
             Your fitness goals are just one step away!
           </CTADescription>
-          <Button variant="outline" size="lg" onClick={scrollToContact}>
+          <Button variant="outline" size="lg" onClick={handleJoinNow}>
             Get Started Today
           </Button>
         </Container>
       </CTASection>
+      
+      {/* Story Modal */}
+      {showStoryModal && (
+        <ModalOverlay onClick={closeStoryModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <ModalHeader>
+              <CloseButton onClick={closeStoryModal}>×</CloseButton>
+              <ModalTitle>The FitZone Story</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <StorySection>
+                <StoryTitle>Our Journey Began in 2019</StoryTitle>
+                <StoryText>
+                  FitZone Gym was born from a simple yet powerful vision: to create a fitness sanctuary 
+                  where every individual, regardless of their fitness level, could embark on a 
+                  transformative journey towards better health and wellness.
+                </StoryText>
+                <StoryText>
+                  Founded by fitness enthusiasts Rajesh and Priya, who themselves struggled to find 
+                  a gym that combined professional expertise with a welcoming community atmosphere, 
+                  FitZone started as a modest 2,000 sq ft facility in Andheri West, Mumbai.
+                </StoryText>
+              </StorySection>
+
+              <StoryHighlight>
+                <p>"We wanted to create more than just a gym – we wanted to build a community where fitness dreams become reality."</p>
+              </StoryHighlight>
+
+              <StorySection>
+                <StoryTitle>Growing Beyond Expectations</StoryTitle>
+                <StoryText>
+                  What started with 50 members in our first month has grown into a thriving community 
+                  of over 500 fitness enthusiasts. Our success lies not just in our state-of-the-art 
+                  equipment or expert trainers, but in our commitment to treating every member as family.
+                </StoryText>
+                <StoryText>
+                  From our humble beginnings, we've expanded our facility to 8,000 sq ft, added 
+                  specialized zones for CrossFit, yoga, and functional training, and assembled a 
+                  team of 50+ certified trainers who share our passion for helping others succeed.
+                </StoryText>
+              </StorySection>
+
+              <StorySection>
+                <StoryTitle>Our Mission Today</StoryTitle>
+                <StoryText>
+                  Today, FitZone stands as Mumbai's premier fitness destination, but our core mission 
+                  remains unchanged: to empower individuals to unlock their potential through fitness, 
+                  build lasting healthy habits, and create a supportive community that celebrates 
+                  every victory, no matter how small.
+                </StoryText>
+                <StoryText>
+                  We believe that fitness is not a destination but a journey, and we're honored to 
+                  be part of thousands of transformation stories. Every drop of sweat, every personal 
+                  record, and every smile of achievement in our gym reinforces why we do what we do.
+                </StoryText>
+              </StorySection>
+
+              <StoryStats>
+                <StoryStat>
+                  <StoryStatNumber>500+</StoryStatNumber>
+                  <StoryStatLabel>Lives Transformed</StoryStatLabel>
+                </StoryStat>
+                <StoryStat>
+                  <StoryStatNumber>50+</StoryStatNumber>
+                  <StoryStatLabel>Expert Trainers</StoryStatLabel>
+                </StoryStat>
+                <StoryStat>
+                  <StoryStatNumber>8000</StoryStatNumber>
+                  <StoryStatLabel>Sq Ft Facility</StoryStatLabel>
+                </StoryStat>
+                <StoryStat>
+                  <StoryStatNumber>5+</StoryStatNumber>
+                  <StoryStatLabel>Years of Excellence</StoryStatLabel>
+                </StoryStat>
+              </StoryStats>
+            </ModalBody>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </HomeContainer>
   );
 };
