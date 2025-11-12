@@ -213,9 +213,6 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
   
-  const handleJoinNow = () => {
-    window.location.href = '/membership';
-  };
   
   return (
     <HeaderContainer>
@@ -234,9 +231,6 @@ const Header = () => {
               {item.label}
             </NavLink>
           ))}
-          <Button variant="primary" size="sm" onClick={handleJoinNow}>
-            Join Now
-          </Button>
         </NavLinks>
         
         <MobileMenuButton open={mobileMenuOpen} onClick={toggleMobileMenu}>
