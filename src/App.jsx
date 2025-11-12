@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { globalStyles } from './stitches.config';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Watermark from './components/Watermark';
 import Home from './pages/Home';
 import About from './pages/About';
 import Programs from './pages/Programs';
@@ -33,6 +34,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <Watermark />
         </div>
       </Router>
     </HelmetProvider>
