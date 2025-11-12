@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "npmrc": {
+    "legacy-peer-deps": true
+  },
   "dependencies": {
     "@stitches/react": "^1.2.8",
     "react": "^19.2.0",
