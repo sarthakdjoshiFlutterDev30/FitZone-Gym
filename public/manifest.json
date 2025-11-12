@@ -11,10 +11,16 @@
   "lang": "en-IN",
   "icons": [
     {
-      "src": "/vite.svg",
-      "sizes": "any",
+      "src": "/fitzone-logo.svg",
+      "sizes": "64x64",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "favicon"
     }
   ],
   "screenshots": [
@@ -34,8 +40,8 @@
       "url": "/membership",
       "icons": [
         {
-          "src": "/vite.svg",
-          "sizes": "96x96"
+          "src": "/fitzone-logo.svg",
+          "sizes": "64x64"
         }
       ]
     },
@@ -46,8 +52,8 @@
       "url": "/contact",
       "icons": [
         {
-          "src": "/vite.svg",
-          "sizes": "96x96"
+          "src": "/fitzone-logo.svg",
+          "sizes": "64x64"
         }
       ]
     }
